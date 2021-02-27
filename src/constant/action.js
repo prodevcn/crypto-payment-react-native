@@ -1,0 +1,12 @@
+export const GET_USERS = 'GET_USERS';
+export const REGISTER_USER = 'REGISTER_USERS';
+export const REMOVE_USER = 'REMOVE_USER';
+export const UPDATE_USER = 'UPDATE_USER';
+export const ERROR = 'ERROR';
+export const SET_AUTH = 'SET_AUTH';
+export const SIGNUP = 'SIGNUP';
+export const FETCHING = 'FETCHING';
+export const FETCHED = 'FETCHED';
+export const SET_PIN = 'SET_PIN';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const LOGIN = 'LOGIN';
