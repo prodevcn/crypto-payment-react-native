@@ -5,6 +5,7 @@ import {
   SET_PIN,
   CHANGE_PASSWORD,
   LOGIN,
+  SET_WALLET,
 } from '../constant/action';
 import conf from '../constant/network';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,6 +16,7 @@ const headers = {
 export function createPin(user, letters) {
   return (dispatch) => {
     let pin = '';
+    let wallet = {};
     for (let letter of letters) {
       pin += letter;
     }
@@ -28,6 +30,10 @@ export function createPin(user, letters) {
     })
       .then((res) => res.json())
       .then((resJson) => {
+        for (let item of resJson.currencies) {
+          wallet[item.name] = item.balance;
+        }
+        dispatch({type: SET_WALLET, payload: wallet});
         dispatch({type: SET_PIN, payload: user});
         dispatch({type: FETCHED, payload: ''});
       })
@@ -42,7 +48,6 @@ export function changePassword(user, password, secretNumber) {
     dispatch({type: FETCHING, payload: ''});
     const url = conf.base_url + '/user/change-password';
     AsyncStorage.getItem('access_token').then((token) => {
-      // console.log(token);
       fetch(url, {
         method: 'POST',
         headers: {
@@ -82,7 +87,6 @@ export function signupRequest() {
       .then((res) => res.json())
       .then((resJson) => {
         AsyncStorage.setItem('access_token', resJson.token).then(() => {
-          console.log(resJson);
           dispatch({type: SIGNUP, payload: resJson});
           dispatch({type: FETCHED, payload: ''});
         });

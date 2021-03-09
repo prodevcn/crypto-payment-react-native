@@ -9,6 +9,7 @@ export default {
       card: '#373f4c',
       up: '#1bc470',
       down: '#ff5100',
+      disabled: '#888',
     },
     font: {
       primary: 'AkayaTelivigala-Regular',

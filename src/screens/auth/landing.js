@@ -8,13 +8,16 @@ const Landing = (props) => {
     <SafeAreaView style={styles.main}>
       <View style={_inner.container}>
         <View style={_inner.logo_section}>
-          <Text style={_inner.title}>ROYAL TRANSFERT</Text>
           <View style={_inner.logo_back}>
             <Image
               style={_inner.logo}
               source={require('../../../assets/images/logo.png')}
             />
           </View>
+          <Text style={_inner.title}>ROYAL TRANSFERT</Text>
+          <Text style={_inner.title1}>
+            MOBILE INSTANT PAYMENTS AROUND THE WORLD
+          </Text>
         </View>
         <View style={_inner.btn_section}>
           <Button
@@ -43,23 +46,22 @@ const Landing = (props) => {
 
 const window = Dimensions.get('window');
 const _inner = StyleSheet.create({
+  main: {
+    backgroundColor: config.dark_theme.third,
+  },
   logo: {
     width: window.width * 0.4,
     height: window.width * 0.4,
     alignSelf: 'center',
   },
   logo_section: {
-    paddingTop: window.height * 0.1,
+    alignItems: 'flex-start',
   },
   title: {
     width: window.width * 0.8,
-    fontFamily: config.dark_theme.font.primary,
     textAlign: 'center',
     color: config.dark_theme.third,
-    fontSize: window.width * 0.1,
-    textShadowOffset: {width: 2, height: 2},
-    textShadowColor: config.dark_theme.third,
-    textShadowRadius: 10,
+    fontSize: window.width * 0.05,
   },
   container: {
     width: window.width * 0.8,
@@ -70,16 +72,20 @@ const _inner = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
+  title1: {
+    width: window.width * 0.8,
+    marginTop: 20,
+    textAlign: 'center',
+    color: config.dark_theme.color.description,
+  },
   logo_back: {
     marginTop: '10%',
     width: window.width * 0.5,
     height: window.width * 0.5,
     borderRadius: 100,
     alignSelf: 'center',
-    shadowColor: 'red',
-    shadowOffset: {width: 0, height: 10},
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
   },
 });
 

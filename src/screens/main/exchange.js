@@ -7,10 +7,11 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  TextInput,
 } from 'react-native';
 import {Button} from 'react-native-paper';
 import currencies from '../../constant/currency';
+// import {ActionSheet} from 'react-native-android-sheet';
+
 // import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from '../../constant/styles';
 import config from '../../constant/config';

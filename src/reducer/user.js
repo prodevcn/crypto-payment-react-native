@@ -32,7 +32,6 @@ export default function reducer(
       return state;
     }
     case SET_AUTH: {
-      console.log(action.payload);
       return {
         ...state,
         authenticated: true,
@@ -52,7 +51,6 @@ export default function reducer(
       };
     }
     case LOGIN: {
-      console.log(action.payload);
       return {
         ...state,
         user: action.payload,

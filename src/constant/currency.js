@@ -13,7 +13,7 @@ export default [
   },
   {
     name: 'CAD',
-    em: 'cdn',
+    em: 'cad',
     iconUri: require('../../assets/images/coins/cdn.png'),
     symbol: 'C$',
   },

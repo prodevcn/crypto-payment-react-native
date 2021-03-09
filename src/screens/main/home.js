@@ -2,8 +2,6 @@ import React from 'react';
 import {SafeAreaView, StyleSheet, Dimensions, View} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createTabNavigator} from '@react-navigation/bottom-tabs';
-import {Button} from 'react-native-paper';
-import {Card} from 'native-base';
 
 import styles from '../../constant/styles';
 import config from '../../constant/config';

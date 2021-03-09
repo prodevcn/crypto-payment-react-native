@@ -54,7 +54,7 @@ const Transfer = (props) => {
             <TouchableOpacity style={_inner.item_card}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/xof.png')}
+                source={require('../../../assets/images/coins/aud.png')}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>

@@ -10,3 +10,4 @@ export const FETCHED = 'FETCHED';
 export const SET_PIN = 'SET_PIN';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const LOGIN = 'LOGIN';
+export const SET_WALLET = 'SET_WALLET';

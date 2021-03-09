@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import {Button} from 'react-native-paper';
 import styles from '../../constant/styles';
@@ -28,7 +29,8 @@ const Login = (props) => {
   return (
     <SafeAreaView style={styles.main}>
       <Header navigation={props.navigation} />
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         {fetching && (
           <ActivityIndicator
             size="large"
@@ -134,7 +136,6 @@ const _inner = StyleSheet.create({
     height: window.height * 0.7,
     marginTop: window.height * 0.1,
     marginBottom: window.height * 0.1,
-    // backgroundColor: 'white',
     alignSelf: 'center',
     flexDirection: 'column',
     justifyContent: 'space-between',

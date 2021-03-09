@@ -42,6 +42,13 @@ const styles = StyleSheet.create({
     borderColor: conf.dark_theme.third,
     alignSelf: 'center',
   },
+  outlined_button3: {
+    // width: '100%',
+    borderWidth: 1,
+    margin: '2%',
+    borderColor: conf.dark_theme.third,
+    alignSelf: 'center',
+  },
   default_input: {
     backgroundColor: 'transparent',
     borderColor: conf.dark_theme.third,
@@ -52,6 +59,52 @@ const styles = StyleSheet.create({
   },
   description_text: {
     color: conf.dark_theme.color.description,
+  },
+  section_title: {
+    color: config.dark_theme.third,
+    marginLeft: 20,
+    marginBottom: 10,
+  },
+  card: {
+    backgroundColor: config.dark_theme.color.card,
+    borderRadius: 10,
+    paddingVertical: 10,
+    width: '100%',
+  },
+  option_item: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '90%',
+    alignSelf: 'center',
+    marginVertical: 5,
+  },
+  half_section: {
+    width: '50%',
+    alignItems: 'flex-start',
+  },
+  option_title: {
+    color: config.dark_theme.color.disabled,
+  },
+  option_description: {
+    color: config.dark_theme.color.description,
+  },
+  text_up: {
+    color: config.dark_theme.color.up,
+  },
+  text_down: {
+    color: config.dark_theme.color.down,
+  },
+  message: {
+    backgroundColor: config.dark_theme.color.card,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginBottom: 20,
+    width: '100%',
+  },
+  btn_rounded: {
+    backgroundColor: config.dark_theme.color.card,
+    padding: 5,
+    borderRadius: 100,
   },
 });
 

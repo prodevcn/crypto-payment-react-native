@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
 import {Button} from 'react-native-paper';
 import styles from '../../constant/styles';
@@ -30,7 +31,11 @@ const SignupSuccess = (props) => {
     <SafeAreaView style={styles.main}>
       <KeyboardAvoidingView>
         {fetching && (
-          <ActivityIndicator size="large" color={config.dark_theme.third} />
+          <ActivityIndicator
+            size="large"
+            color={config.dark_theme.third}
+            style={_inner.activity}
+          />
         )}
         <View style={_inner.container}>
           <View>
@@ -137,12 +142,12 @@ const _inner = StyleSheet.create({
   },
   container: {
     width: window.width * 0.8,
-    height: window.height * 0.8,
-    marginTop: window.height * 0.1,
-    marginBottom: window.height * 0.1,
-    // backgroundColor: 'white',
+    height: window.height,
     alignSelf: 'center',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
+  },
+  activity: {
+    top: '50%',
   },
 });

@@ -10,8 +10,6 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import {Button} from 'react-native-paper';
-import {Card, CardItem} from 'native-base';
 
 import styles from '../../constant/styles';
 import config from '../../constant/config';
@@ -19,9 +17,13 @@ import Icon from 'react-native-vector-icons/AntDesign';
 
 import Header from '../../component/header_2';
 import currencies from '../../constant/currency';
+import {useSelector} from 'react-redux';
 
 const Balance = (props) => {
-  console.log(currencies);
+  const {wallet} = useSelector((state) => state.wallet);
+  const goDetail = (currency) => {
+    props.navigation.navigate('balance-detail', {selectedCurrency: currency});
+  };
   return (
     <SafeAreaView style={styles.main}>
       <Header navigation={props.navigation} />
@@ -37,7 +39,7 @@ const Balance = (props) => {
                     source={require('../../../assets/images/chart.png')}
                     style={_inner.chart}
                   />
-                  <Text style={_inner.price}>50,590 $</Text>
+                  <Text style={_inner.price}>{wallet[item.em]} $</Text>
                   <Text style={_inner.volumes}>1,590 $</Text>
                 </View>
                 <View style={_inner.rt_side}>
@@ -56,24 +58,35 @@ const Balance = (props) => {
           <Icon name="wallet" size={32} color={config.dark_theme.third} />
           <Text style={_inner.balance_text}>0.0000</Text>
         </View>
-
         <ScrollView showsVerticalScrollIndicator={false} style={_inner.scroll}>
           <View style={_inner.row}>
-            <TouchableOpacity style={_inner.item_card}>
+            <TouchableOpacity
+              style={_inner.item_card}
+              onPress={() => {
+                goDetail(currencies[0]);
+              }}>
               <Image
                 style={_inner.currency_small}
                 source={require('../../../assets/images/coins/usd.png')}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={_inner.item_card}>
+            <TouchableOpacity
+              style={_inner.item_card}
+              onPress={() => {
+                goDetail(currencies[1]);
+              }}>
               <Image
                 style={_inner.currency_small}
                 source={require('../../../assets/images/coins/eur.png')}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={_inner.item_card}>
+            <TouchableOpacity
+              style={_inner.item_card}
+              onPress={() => {
+                goDetail(currencies[2]);
+              }}>
               <Image
                 style={_inner.currency_small}
                 source={require('../../../assets/images/coins/cdn.png')}
@@ -82,17 +95,25 @@ const Balance = (props) => {
             </TouchableOpacity>
           </View>
           <View style={_inner.row}>
-            <TouchableOpacity style={_inner.item_card}>
+            <TouchableOpacity
+              style={_inner.item_card}
+              onPress={() => {
+                goDetail(currencies[3]);
+              }}>
               <Image
                 style={_inner.currency_small}
                 source={require('../../../assets/images/coins/gbp.png')}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={_inner.item_card}>
+            <TouchableOpacity
+              style={_inner.item_card}
+              onPress={() => {
+                goDetail(currencies[4]);
+              }}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/xof.png')}
+                source={require('../../../assets/images/coins/aud.png')}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
@@ -137,9 +158,12 @@ const _inner = StyleSheet.create({
   },
   container: {
     width: window.width * 0.9,
-    marginBottom: window.height * 0.1,
+    height: window.height,
+    // marginBottom: window.height * 0.1,
     alignSelf: 'center',
     flexDirection: 'column',
+    // backgroundColor: 'red',
+    justifyContent: 'space-around',
   },
   pin_code: {
     // backgroundColor: 'gold',
@@ -203,8 +227,9 @@ const _inner = StyleSheet.create({
     shadowRadius: 20,
   },
   price_chart: {
-    width: window.width,
+    width: window.width * 1.1,
     left: -window.width * 0.1,
+    // backgroundColor: 'yellow',
   },
   card: {
     width: window.width * 0.75,
@@ -260,7 +285,7 @@ const _inner = StyleSheet.create({
   scroll: {
     height: window.height * 0.5,
     marginTop: 20,
-    // backgroundColor: 'red',
+    // backgroundColor: 'aqua',
   },
   balance: {
     alignSelf: 'center',

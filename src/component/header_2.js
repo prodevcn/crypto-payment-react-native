@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -11,11 +11,17 @@ import Icon2 from 'react-native-vector-icons/FontAwesome';
 import {Button} from 'native-base';
 import config from '../constant/config';
 import styles from '../constant/styles';
+import {useSelector} from 'react-redux';
 const Header = (props) => {
+  const {user} = useSelector((state) => state.user);
   return (
     <View style={_inner.main}>
       <View style={_inner.container}>
-        <TouchableOpacity style={_inner.personal_section}>
+        <TouchableOpacity
+          style={_inner.personal_section}
+          onPress={() => {
+            props.navigation.navigate('account-info');
+          }}>
           <Icon2
             name="user-circle"
             size={40}
@@ -24,7 +30,7 @@ const Header = (props) => {
           />
           <View style={_inner.avatar_desc}>
             <Text style={_inner.title}>Account No</Text>
-            <Text style={styles.description_text}>RT10423124213</Text>
+            <Text style={styles.description_text}>{user.accountNumber}</Text>
           </View>
         </TouchableOpacity>
         <View style={_inner.control}>
@@ -34,9 +40,9 @@ const Header = (props) => {
             light
             style={_inner.button}
             onPress={() => {
-              props.navigation.navigate('support');
+              props.navigation.navigate('message');
             }}>
-            <Icon name="message1" size={20} color={config.dark_theme.third} />
+            <Icon name="message1" size={28} color={config.dark_theme.third} />
           </Button>
           <Button
             transparent
@@ -48,7 +54,7 @@ const Header = (props) => {
             }}>
             <Icon
               name="customerservice"
-              size={20}
+              size={28}
               color={config.dark_theme.third}
             />
           </Button>
@@ -58,9 +64,9 @@ const Header = (props) => {
             light
             style={_inner.button}
             onPress={() => {
-              props.navigation.navigate('support');
+              props.navigation.navigate('settings');
             }}>
-            <Icon name="setting" size={20} color={config.dark_theme.third} />
+            <Icon name="setting" size={28} color={config.dark_theme.third} />
           </Button>
         </View>
       </View>

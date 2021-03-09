@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {StatusBar} from 'react-native';
@@ -8,6 +8,7 @@ import AppNavigation from './main';
 import Support from '../screens/support';
 import CreateTicket from '../screens/create-ticket';
 import config from '../constant/config';
+import SplashScreen from 'react-native-splash-screen';
 
 const Stack = createStackNavigator();
 const headerOption = {
@@ -19,7 +20,6 @@ const headerOption2 = {
     backgroundColor: config.dark_theme.primary,
     borderBottomWidth: 0,
     elevation: 0,
-    // shadowOpacity: 0,
   },
   headerShown: true,
   title: '',
@@ -55,6 +55,9 @@ const RootStack = () => {
   );
 };
 const MainNavigation = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <NavigationContainer>
       <StatusBar hidden={true} />

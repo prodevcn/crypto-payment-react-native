@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import store from './src/store';
 import AwesomeIcon from 'react-native-vector-icons/FontAwesome5Pro';
+import {Root} from 'native-base';
 const theme = {
   ...DefaultTheme,
   colors: {
@@ -19,7 +20,9 @@ export default () => {
       <PaperProvider
         theme={theme}
         settings={{icon: (props) => <AwesomeIcon {...props} />}}>
-        <MainNavigation />
+        <Root>
+          <MainNavigation />
+        </Root>
       </PaperProvider>
     </Provider>
   );

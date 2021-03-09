@@ -3,7 +3,12 @@
         "Paypal",
         "Transafert",
         "Transfert",
+        "actionsheet",
+        "arrowleft",
+        "calendario",
         "customerservice",
+        "flatlist",
+        "pluscircleo",
         "unimodules"
     ]
 }

@@ -16,6 +16,12 @@ import Transfer from '../screens/main/transfer';
 import Trade from '../screens/main/trade';
 import Exchange from '../screens/main/exchange';
 import History from '../screens/main/history';
+import Settings from '../screens/main/settings';
+import AccountInfo from '../screens/main/account-info';
+import Message from '../screens/main/message';
+import Bind from '../screens/main/bind';
+import OrderHistory from '../screens/main/order-history';
+import BalanceDetail from '../screens/main/balance-detail';
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,6 +42,11 @@ const BalanceStack = () => {
       <Stack.Screen
         name="balance"
         component={Balance}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="balance-detail"
+        component={BalanceDetail}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -86,7 +97,7 @@ const HistoryStack = () => {
   );
 };
 
-const AppNavigation = (props) => {
+const TabNavigation = () => {
   return (
     <Tab.Navigator
       initialRouteName="balance-screen"
@@ -153,6 +164,39 @@ const AppNavigation = (props) => {
         }}
       />
     </Tab.Navigator>
+  );
+};
+
+const AppNavigation = (props) => {
+  return (
+    <Stack.Navigator initialRouteName="tabs">
+      <Stack.Screen
+        name="tabs"
+        component={TabNavigation}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="settings"
+        component={Settings}
+        options={headerOption}
+      />
+      <Stack.Screen
+        name="account-info"
+        component={AccountInfo}
+        options={headerOption}
+      />
+      <Stack.Screen
+        name="bind"
+        component={Bind}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="order-history"
+        component={OrderHistory}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen name="message" component={Message} options={headerOption} />
+    </Stack.Navigator>
   );
 };
 
