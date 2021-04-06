@@ -28,6 +28,10 @@ const Balance = (props) => {
     <SafeAreaView style={styles.main}>
       <Header navigation={props.navigation} />
       <View style={_inner.container}>
+        <View style={_inner.balance}>
+          <Icon name="wallet" size={32} color={config.dark_theme.third} />
+          <Text style={_inner.balance_text}>0.0000</Text>
+        </View>
         <View style={_inner.price_chart}>
           <FlatList
             style={styles.list}
@@ -54,11 +58,8 @@ const Balance = (props) => {
             showsVerticalScrollIndicator={false}
           />
         </View>
-        <View style={_inner.balance}>
-          <Icon name="wallet" size={32} color={config.dark_theme.third} />
-          <Text style={_inner.balance_text}>0.0000</Text>
-        </View>
-        <ScrollView showsVerticalScrollIndicator={false} style={_inner.scroll}>
+
+        <ScrollView style={_inner.scroll} showsVerticalScrollIndicator={false}>
           <View style={_inner.row}>
             <TouchableOpacity
               style={_inner.item_card}
@@ -67,7 +68,7 @@ const Balance = (props) => {
               }}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/usd.png')}
+                source={currencies[0].iconUri}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
@@ -78,7 +79,7 @@ const Balance = (props) => {
               }}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/eur.png')}
+                source={currencies[1].iconUri}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
@@ -89,7 +90,7 @@ const Balance = (props) => {
               }}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/cdn.png')}
+                source={currencies[2].iconUri}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
@@ -102,7 +103,7 @@ const Balance = (props) => {
               }}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/gbp.png')}
+                source={currencies[3].iconUri}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
@@ -113,12 +114,58 @@ const Balance = (props) => {
               }}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/aud.png')}
+                source={currencies[4].iconUri}
               />
               <Text style={styles.description_text}>0.000</Text>
             </TouchableOpacity>
             <TouchableOpacity style={_inner.item_card}>
-              <Text style={styles.description_text}>...</Text>
+              <Image
+                style={_inner.currency_small}
+                source={require('../../../assets/images/coins/btc.png')}
+              />
+              <Text style={styles.description_text}>0.000</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={_inner.row}>
+            <TouchableOpacity style={_inner.item_card}>
+              <Image
+                style={_inner.currency_small}
+                source={require('../../../assets/images/coins/eth.png')}
+              />
+              <Text style={styles.description_text}>0.000</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={_inner.item_card}>
+              <Image
+                style={_inner.currency_small}
+                source={require('../../../assets/images/coins/usdt.png')}
+              />
+              <Text style={styles.description_text}>0.000</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={_inner.item_card}>
+              <Image
+                style={_inner.currency_small}
+                source={require('../../../assets/images/coins/ltc.png')}
+              />
+              <Text style={styles.description_text}>0.000</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={_inner.row}>
+            <TouchableOpacity style={_inner.item_card}>
+              <Image
+                style={_inner.currency_small}
+                source={require('../../../assets/images/coins/dash.png')}
+              />
+              <Text style={styles.description_text}>0.000</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={_inner.item_card}>
+              <Image
+                style={_inner.currency_small}
+                source={require('../../../assets/images/coins/xrp.png')}
+              />
+              <Text style={styles.description_text}>0.000</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={_inner.item_card}>
+              <Text style={styles.description_text}>. . .</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -158,7 +205,7 @@ const _inner = StyleSheet.create({
   },
   container: {
     width: window.width * 0.9,
-    height: window.height,
+    height: window.height * 0.8,
     // marginBottom: window.height * 0.1,
     alignSelf: 'center',
     flexDirection: 'column',
@@ -283,13 +330,13 @@ const _inner = StyleSheet.create({
     borderRadius: 10,
   },
   scroll: {
-    height: window.height * 0.5,
+    height: window.height * 0.2,
     marginTop: 20,
     // backgroundColor: 'aqua',
   },
   balance: {
     alignSelf: 'center',
-    marginTop: 20,
+    marginVertical: 20,
     flexDirection: 'row',
     alignItems: 'center',
   },

@@ -6,7 +6,7 @@ import config from '../constant/config';
 const Header = (props) => {
   return (
     <View style={_inner.main}>
-      <Text style={_inner.title}>LOGIN</Text>
+      <Text style={_inner.title}>Login</Text>
       <Button
         transparent
         iconLeft

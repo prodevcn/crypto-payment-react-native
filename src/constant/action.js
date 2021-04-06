@@ -11,3 +11,5 @@ export const SET_PIN = 'SET_PIN';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 export const LOGIN = 'LOGIN';
 export const SET_WALLET = 'SET_WALLET';
+export const SET_ACCESS_TOKEN = 'SET_ACCESS_TOKEN';
+export const SET_FEE = 'SET_FEE';

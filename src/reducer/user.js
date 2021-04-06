@@ -14,6 +14,7 @@ export default function reducer(
     user: {},
     status: false,
     authenticated: false,
+    access_token: null,
     msg: '',
   },
   action,

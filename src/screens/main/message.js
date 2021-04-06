@@ -10,6 +10,7 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from '../../constant/styles';
 import config from '../../constant/config';
 import {useSelector, useDispatch} from 'react-redux';
@@ -18,6 +19,7 @@ import network from '../../constant/network';
 import {setFetched, setFetching} from '../../action/common';
 import Toast from 'react-native-simple-toast';
 import {Modal} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const sketchDescription = (letter) => {
   const text = letter.slice(0, 120);
   return text;
@@ -46,6 +48,7 @@ const Message = (props) => {
   const getMessages = () => {
     const url = network.base_url + '/message/get-message';
     dispatch(setFetching());
+    network.headers.Authorization = user.token;
     fetch(url, {
       method: 'POST',
       headers: network.headers,
@@ -89,7 +92,7 @@ const Message = (props) => {
               progressBackgroundColor={config.dark_theme.third}
             />
           }>
-          {messages.length !== 0 &&
+          {messages.length !== 0 ? (
             messages.map((item, index) => {
               return (
                 <TouchableOpacity
@@ -109,7 +112,17 @@ const Message = (props) => {
                   </View>
                 </TouchableOpacity>
               );
-            })}
+            })
+          ) : (
+            <View style={_inner.message_logo}>
+              <Icon
+                name="message-alert-outline"
+                color={config.dark_theme.third}
+                size={window.width * 0.3}
+              />
+              <Text style={styles.description}>NO MESSAGE</Text>
+            </View>
+          )}
         </ScrollView>
       </View>
       <Modal
@@ -215,5 +228,10 @@ const _inner = StyleSheet.create({
     color: config.dark_theme.third,
     marginHorizontal: 20,
     marginVertical: 10,
+  },
+  message_logo: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    marginTop: window.height * 0.2,
   },
 });

@@ -30,7 +30,7 @@ const Header = (props) => {
           />
           <View style={_inner.avatar_desc}>
             <Text style={_inner.title}>Account No</Text>
-            <Text style={styles.description_text}>{user.accountNumber}</Text>
+            <Text style={styles.description_text}>{user.account_number}</Text>
           </View>
         </TouchableOpacity>
         <View style={_inner.control}>

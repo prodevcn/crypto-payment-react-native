@@ -27,7 +27,7 @@ const AccountInfo = (props) => {
               </View>
               <View style={styles.half_section}>
                 <Text style={styles.option_description}>
-                  {user.accountNumber}
+                  {user.account_number}
                 </Text>
               </View>
             </View>
@@ -48,7 +48,9 @@ const AccountInfo = (props) => {
                 <Text style={styles.option_title}>Registration</Text>
               </View>
               <View style={styles.half_section}>
-                <Text style={styles.option_description}>{user.createTime}</Text>
+                <Text style={styles.option_description}>
+                  {user.created_time}
+                </Text>
               </View>
             </View>
           </View>

@@ -1,14 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 import {StatusBar} from 'react-native';
-import {useSelector} from 'react-redux';
 import AuthNavigation from './auth';
 import AppNavigation from './main';
 import Support from '../screens/support';
 import CreateTicket from '../screens/create-ticket';
 import config from '../constant/config';
 import SplashScreen from 'react-native-splash-screen';
+
+import {useSelector, useDispatch} from 'react-redux';
+import {getFee} from '../action/common';
 
 const Stack = createStackNavigator();
 const headerOption = {
@@ -55,8 +58,10 @@ const RootStack = () => {
   );
 };
 const MainNavigation = () => {
+  const dispatch = useDispatch();
   useEffect(() => {
     SplashScreen.hide();
+    dispatch(getFee());
   }, []);
   return (
     <NavigationContainer>

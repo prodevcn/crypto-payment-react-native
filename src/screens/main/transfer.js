@@ -11,57 +11,80 @@ import {
 } from 'react-native';
 import config from '../../constant/config';
 import styles from '../../constant/styles';
+import Icon from 'react-native-vector-icons/AntDesign';
 const Transfer = (props) => {
   return (
     <SafeAreaView style={styles.main}>
       <View style={_inner.container}>
         <View>
-          <Text style={_inner.title}>TRANSFER</Text>
+          <Text style={_inner.title}>Transfer</Text>
           <Text style={_inner.description}>-- CHOOSE PAYMENT SYSTEM --</Text>
         </View>
+        <TouchableOpacity
+          style={_inner.btn_rounded}
+          onPress={() => {
+            props.navigation.goBack();
+          }}>
+          <Icon name="arrowleft" size={20} color={config.dark_theme.third} />
+        </TouchableOpacity>
         <ScrollView showsVerticalScrollIndicator={false} style={_inner.scroll}>
           <View style={_inner.row}>
-            <TouchableOpacity style={_inner.item_card}>
+            <TouchableOpacity
+              style={_inner.item_card}
+              onPress={() => {
+                props.navigation.navigate('transfer-detail');
+              }}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/usd.png')}
+                source={require('../../../assets/images/payment_systems/rt.png')}
               />
-              <Text style={styles.description_text}>0.000</Text>
+              <Text style={styles.description_text}>RoyalTransfert</Text>
             </TouchableOpacity>
             <TouchableOpacity style={_inner.item_card}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/eur.png')}
+                source={require('../../../assets/images/coins/btc.png')}
               />
-              <Text style={styles.description_text}>0.000</Text>
+              <Text style={styles.description_text}>Bitcoin</Text>
             </TouchableOpacity>
             <TouchableOpacity style={_inner.item_card}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/cdn.png')}
+                source={require('../../../assets/images/coins/eth.png')}
               />
-              <Text style={styles.description_text}>0.000</Text>
+              <Text style={styles.description_text}>Ethereum</Text>
             </TouchableOpacity>
           </View>
           <View style={_inner.row}>
             <TouchableOpacity style={_inner.item_card}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/gbp.png')}
+                source={require('../../../assets/images/coins/usdt.png')}
               />
-              <Text style={styles.description_text}>0.000</Text>
+              <Text style={styles.description_text}>Tether</Text>
             </TouchableOpacity>
             <TouchableOpacity style={_inner.item_card}>
               <Image
                 style={_inner.currency_small}
-                source={require('../../../assets/images/coins/aud.png')}
+                source={require('../../../assets/images/coins/ltc.png')}
               />
-              <Text style={styles.description_text}>0.000</Text>
+              <Text style={styles.description_text}>Litecoin</Text>
             </TouchableOpacity>
             <TouchableOpacity style={_inner.item_card}>
-              <Text style={styles.description_text}>...</Text>
+              <Image
+                style={_inner.currency_small}
+                source={require('../../../assets/images/coins/dash.png')}
+              />
+              <Text style={styles.description_text}>Dash</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity style={_inner.item_card}>
+            <Image
+              style={_inner.currency_small}
+              source={require('../../../assets/images/coins/xrp.png')}
+            />
+            <Text style={styles.description_text}>Ripple</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -82,6 +105,13 @@ const _inner = StyleSheet.create({
     textShadowColor: config.dark_theme.third,
     // textShadowRadius: 10,
   },
+  btn_rounded: {
+    backgroundColor: config.dark_theme.color.card,
+    padding: 5,
+    position: 'absolute',
+    left: 0,
+    borderRadius: 100,
+  },
   label: {
     color: config.dark_theme.third,
   },
@@ -98,7 +128,7 @@ const _inner = StyleSheet.create({
     marginTop: '5%',
   },
   container: {
-    marginTop: window.height * 0.1,
+    marginTop: window.height * 0.02,
     width: window.width * 0.9,
     marginBottom: window.height * 0.1,
     alignSelf: 'center',
@@ -190,7 +220,7 @@ const _inner = StyleSheet.create({
     borderRadius: 10,
   },
   scroll: {
-    height: window.height * 0.5,
+    height: window.height * 0.7,
     marginTop: 20,
     // backgroundColor: 'red',
   },

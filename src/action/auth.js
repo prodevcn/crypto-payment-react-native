@@ -43,7 +43,7 @@ export function createPin(user, letters) {
   };
 }
 
-export function changePassword(user, password, secretNumber) {
+export function changePassword(user, password, secret_number) {
   return (dispatch) => {
     dispatch({type: FETCHING, payload: ''});
     const url = conf.base_url + '/user/change-password';
@@ -58,13 +58,13 @@ export function changePassword(user, password, secretNumber) {
         body: JSON.stringify({
           user: user,
           password: password,
-          secretNumber: secretNumber,
+          secret_number: secret_number,
         }),
       })
         .then((res) => res.json())
         .then((resJson) => {
           user.password = password;
-          user.secretNumber = secretNumber;
+          user.secret_number = secret_number;
           dispatch({type: CHANGE_PASSWORD, payload: user});
           dispatch({type: FETCHED, payload: ''});
         })

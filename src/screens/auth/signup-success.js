@@ -18,9 +18,6 @@ import Clipboard from '@react-native-community/clipboard';
 import Toast from 'react-native-simple-toast';
 
 const SignupSuccess = (props) => {
-  const [account_number, setAccountNumber] = useState('RT123311');
-  const [password, setPassword] = useState('password');
-  const [secret, setSecret] = useState('secret');
   const {user} = useSelector((state) => state.user);
   const {fetching} = useSelector((state) => state.common);
   const copyToClipboard = (data) => {
@@ -39,7 +36,7 @@ const SignupSuccess = (props) => {
         )}
         <View style={_inner.container}>
           <View>
-            <Text style={_inner.title}>SIGNUP SUCCESS</Text>
+            <Text style={_inner.title}>Signup Success</Text>
             <Text style={styles.description}>
               After set your password, keep it in a safe place.
             </Text>
@@ -49,7 +46,7 @@ const SignupSuccess = (props) => {
                 <Input
                   style={styles.default_input}
                   color={config.dark_theme.color.description}
-                  value={user.accountNumber}
+                  value={user.account_number}
                 />
                 <Icon style={_inner.icon} name="person-outline" />
               </Item>
@@ -69,7 +66,7 @@ const SignupSuccess = (props) => {
                 <Input
                   style={styles.default_input}
                   color={config.dark_theme.color.description}
-                  value={user.secretNumber}
+                  value={user.secret_number}
                 />
               </Item>
               <Text style={styles.description}>
@@ -80,7 +77,7 @@ const SignupSuccess = (props) => {
               mode="text"
               color={config.dark_theme.color.description}
               onPress={() => {
-                copyToClipboard(user.accountNumber);
+                copyToClipboard(user.account_number);
               }}>
               copy to clipboard
             </Button>

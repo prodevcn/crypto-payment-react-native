@@ -57,6 +57,12 @@ const styles = StyleSheet.create({
   description: {
     color: conf.dark_theme.third,
   },
+  sub_title: {
+    color: conf.dark_theme.color.description,
+    fontSize: 24,
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
   description_text: {
     color: conf.dark_theme.color.description,
   },

@@ -12,7 +12,7 @@ export default {
       disabled: '#888',
     },
     font: {
-      primary: 'AkayaTelivigala-Regular',
+      // primary: 'AkayaTelivigala-Regular',
       secondary: 'BerkshireSwash-Regular',
       third: 'Pacifico-Regular',
     },

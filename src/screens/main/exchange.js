@@ -29,7 +29,7 @@ const Exchange = (props) => {
     <SafeAreaView style={styles.main}>
       <View style={_inner.container}>
         <View>
-          <Text style={_inner.title}>EXCHANGE</Text>
+          <Text style={_inner.title}>Exchange</Text>
 
           <Form style={_inner.form}>
             <View style={_inner.row}>
@@ -238,6 +238,7 @@ const _inner = StyleSheet.create({
     width: '60%',
   },
   form: {
+    width: '100%',
     // backgroundColor: 'red',
   },
   item_card: {

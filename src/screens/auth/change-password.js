@@ -17,7 +17,7 @@ import {changePassword} from '../../action/auth';
 const ChangePassword = (props) => {
   const {user} = useSelector((state) => state.user);
   const [password, setPassword] = useState(user.password);
-  const [secret, setSecret] = useState(user.secretNumber);
+  const [secret, setSecret] = useState(user.secret_number);
   const dispatch = useDispatch();
   const doConfirm = () => {
     dispatch(changePassword(user, password, secret));

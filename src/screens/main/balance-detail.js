@@ -1,11 +1,12 @@
-import React, {useState, useCallback} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
   View,
   Text,
-  ScrollView,
+  Image,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
@@ -14,35 +15,24 @@ import config from '../../constant/config';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/FontAwesome';
 import Icon3 from 'react-native-vector-icons/FontAwesome5';
-import currencies from '../../constant/currency';
+import {setFetched, setFetching} from '../../action/common';
 import {useSelector, useDispatch} from 'react-redux';
 import {Button, Modal} from 'react-native-paper';
 import {Calendar} from 'react-native-calendario';
+import network from '../../constant/network';
+import Toast from 'react-native-simple-toast';
+import TransactionHistoryItem from '../../component/transaction_history_item';
 
 const BalanceDetail = (props) => {
+  const dispatch = useDispatch();
   const {wallet} = useSelector((state) => state.wallet);
   const {user} = useSelector((state) => state.user);
+  const [charges, setCharges] = useState([]);
+  const {filterRange, setFilterRange} = useState({});
   const [selectedCurrency, selectCurrency] = useState(
     props.route.params.selectedCurrency,
   );
   const [visible, setVisible] = useState(false);
-
-  const flatListOptimizationProps = {
-    initialNumToRender: 0,
-    maxToRenderPerBatch: 1,
-    removeClippedSubviews: true,
-    scrollEventThrottle: 16,
-    windowSize: 2,
-    keyExtractor: useCallback((e) => e.id, []),
-    getItemLayout: useCallback(
-      (_, index) => ({
-        index,
-        length: window.width,
-        offset: index * window.width,
-      }),
-      [],
-    ),
-  };
 
   const closeCalendar = () => {
     setVisible(false);
@@ -50,6 +40,33 @@ const BalanceDetail = (props) => {
   const openCalendar = () => {
     setVisible(true);
   };
+  const getChargeHistory = () => {
+    const url = network.base_url + '/charge/get-charge-history';
+    dispatch(setFetching());
+    network.headers.Authorization = user.token;
+    fetch(url, {
+      method: 'POST',
+      headers: network.headers,
+      body: JSON.stringify({user: user, currency: selectedCurrency.em}),
+    })
+      .then((res) => res.json())
+      .then((resJson) => {
+        if (!resJson.msg) {
+          setCharges(resJson);
+        } else {
+          Toast.show('There is charge history', Toast.LONG, Toast.TOP);
+        }
+        dispatch(setFetched());
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  useEffect(() => {
+    console.log(props.route.params.selectedCurrency);
+    console.log(wallet);
+    getChargeHistory();
+  }, []);
   return (
     <SafeAreaView style={styles.main}>
       <View style={_inner.container}>
@@ -64,83 +81,118 @@ const BalanceDetail = (props) => {
           <Icon name="arrowleft" size={20} color={config.dark_theme.third} />
         </TouchableOpacity>
         <View style={_inner.carousel_area}>
-          {/* <FlatList
-            data={slideList}
-            style={{flex: 1}}
-            renderItem={({item}) => {
-              return <Slide data={item} />;
-            }}
-            pagingEnabled
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            onScroll={onScroll}
-            {...flatListOptimizationProps}
-          /> */}
-        </View>
-        <View style={_inner.card}>
-          <View style={_inner.row}>
-            <TouchableOpacity style={_inner.day_btn}>
-              <Icon
-                name="pluscircleo"
-                size={20}
-                color={config.dark_theme.color.disabled}
-              />
-              <Text style={_inner.btn_label_1}>Add</Text>
-              <Text style={_inner.btn_label_1}>money</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={_inner.day_btn}>
-              <Icon2
-                name="exchange"
-                size={20}
-                color={config.dark_theme.color.disabled}
-              />
-              <Text style={_inner.btn_label_1}>Transfer</Text>
-              <Text style={_inner.btn_label_1}>money</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={_inner.day_btn}>
-              <Icon
-                name="sync"
-                size={20}
-                color={config.dark_theme.color.disabled}
-              />
-              <Text style={_inner.btn_label_1}>Exchange</Text>
-              <Text style={_inner.btn_label_1}>money</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={_inner.row}>
-          <Text style={_inner.sub_title}>Recent transactions</Text>
-          <Button
-            mode="text"
-            color={config.dark_theme.color.disabled}
-            tintColor={config.dark_theme.third}
-            onPress={() => {
-              openCalendar();
-            }}>
-            <Icon
-              name="calendar"
-              size={20}
-              color={config.dark_theme.color.disabled}
+          <View style={_inner.balance_area}>
+            <Image
+              style={_inner.currency_small}
+              source={selectedCurrency.iconUri}
             />
-          </Button>
-        </View>
-        <View style={_inner.empty_history}>
-          <Icon3
-            color={config.dark_theme.third}
-            size={window.width * 0.2}
-            name="money-bill"
-          />
-          <Text style={_inner.sub_title}>Refill your account</Text>
-          <Text style={_inner.btn_label_1}>
-            Make your first transaction using Dash
+            <Text style={_inner.balance_txt}>
+              {wallet[selectedCurrency.em]} {selectedCurrency.symbol}
+            </Text>
+          </View>
+          <Text style={styles.description_text}>
+            RT {selectedCurrency.name} BALANCE
           </Text>
         </View>
-        <Button
-          mode="outlined"
-          color={config.dark_theme.third}
-          style={_inner.outlined_button2}>
-          add money
-        </Button>
+        {charges.length !== 0 ? (
+          <View>
+            <View style={_inner.card}>
+              <View style={_inner.row}>
+                <TouchableOpacity
+                  style={_inner.day_btn}
+                  onPress={() => {
+                    props.navigation.navigate('add-money', {
+                      selectedCurrency: selectedCurrency,
+                    });
+                  }}>
+                  <Icon
+                    name="pluscircleo"
+                    size={20}
+                    color={config.dark_theme.color.disabled}
+                  />
+                  <Text style={_inner.btn_label_1}>Add</Text>
+                  <Text style={_inner.btn_label_1}>money</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={_inner.day_btn}
+                  onPress={() => {
+                    props.navigation.navigate('transfer-screen');
+                  }}>
+                  <Icon2
+                    name="exchange"
+                    size={20}
+                    color={config.dark_theme.color.disabled}
+                  />
+                  <Text style={_inner.btn_label_1}>Transfer</Text>
+                  <Text style={_inner.btn_label_1}>money</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={_inner.day_btn}
+                  onPress={() => {
+                    props.navigation.navigate('exchange-screen');
+                  }}>
+                  <Icon
+                    name="sync"
+                    size={20}
+                    color={config.dark_theme.color.disabled}
+                  />
+                  <Text style={_inner.btn_label_1}>Exchange</Text>
+                  <Text style={_inner.btn_label_1}>money</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={_inner.row}>
+              <Text style={_inner.sub_title}>Recent transactions</Text>
+              <Button
+                mode="text"
+                color={config.dark_theme.color.disabled}
+                tintColor={config.dark_theme.third}
+                onPress={() => {
+                  openCalendar();
+                }}>
+                <Icon
+                  name="calendar"
+                  size={20}
+                  color={config.dark_theme.color.disabled}
+                />
+              </Button>
+            </View>
+            <FlatList
+              style={_inner.charge_history_area}
+              data={charges}
+              renderItem={({item}) => (
+                <TransactionHistoryItem data={item} id={item.id} />
+              )}
+              keyExtractor={(item) => item.id}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        ) : (
+          <View style={{height: 300}}>
+            <View style={_inner.empty_history}>
+              <Icon3
+                color={config.dark_theme.third}
+                size={window.width * 0.2}
+                name="money-bill"
+              />
+              <Text style={_inner.sub_title}>Refill your account</Text>
+              <Text style={_inner.btn_label_1}>
+                Make your first transaction using Dash
+              </Text>
+            </View>
+            <Button
+              mode="outlined"
+              color={config.dark_theme.third}
+              style={_inner.outlined_button2}
+              onPress={() => {
+                props.navigation.navigate('add-money', {
+                  selectedCurrency: selectedCurrency,
+                });
+              }}>
+              add money
+            </Button>
+          </View>
+        )}
       </View>
       <Modal
         visible={visible}
@@ -159,7 +211,7 @@ const BalanceDetail = (props) => {
           </Button>
         </View>
         <Calendar
-          onChange={(range) => console.log(range)}
+          onChange={(range) => setFilterRange(range)}
           startingMonth="2019-01-01"
           numberOfMonths={24}
           // minDate={new Date(2018, 3, 1)}
@@ -225,10 +277,8 @@ const window = Dimensions.get('window');
 const _inner = StyleSheet.create({
   title: {
     textAlign: 'center',
-    color: config.dark_theme.color.description,
+    color: config.dark_theme.third,
     fontSize: window.width * 0.1,
-    textShadowOffset: {width: 2, height: 2},
-    textShadowColor: config.dark_theme.third,
   },
   container: {
     width: window.width * 0.9,
@@ -307,7 +357,20 @@ const _inner = StyleSheet.create({
     position: 'absolute',
     borderRadius: 100,
   },
-  carousel_area: {},
+  carousel_area: {
+    // backgroundColor: 'tomato',
+    alignItems: 'center',
+  },
+  balance_area: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    // backgroundColor: 'yellow',
+    alignItems: 'center',
+  },
+  balance_txt: {
+    color: config.dark_theme.color.description,
+    fontSize: window.height * 0.07,
+  },
   sub_title: {
     color: config.dark_theme.color.description,
     fontSize: 16,
@@ -325,7 +388,7 @@ const _inner = StyleSheet.create({
   },
   child: {
     width: '100%',
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     justifyContent: 'center',
   },
   swiper: {
@@ -336,6 +399,7 @@ const _inner = StyleSheet.create({
   text: {fontSize: window.width * 0.5, textAlign: 'center'},
   empty_history: {
     width: '100%',
+    marginTop: window.height * 0.1,
     alignItems: 'center',
   },
   outlined_button2: {
@@ -346,5 +410,15 @@ const _inner = StyleSheet.create({
     alignSelf: 'center',
     position: 'absolute',
     bottom: 0,
+  },
+  currency_small: {
+    width: window.height * 0.07,
+    height: window.height * 0.07,
+    marginRight: 10,
+  },
+  charge_history_area: {
+    // backgroundColor: 'red',
+    width: '100%',
+    height: window.height * 0.4,
   },
 });
